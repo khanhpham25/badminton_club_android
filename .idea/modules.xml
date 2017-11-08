@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Badminton-Club.iml" filepath="$PROJECT_DIR$/Badminton-Club.iml" />
+      <module fileurl="file://E:\WorkOutput\Android\badminton_club_android\Badminton-Club.iml" filepath="E:\WorkOutput\Android\badminton_club_android\Badminton-Club.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/badminton_club_android.iml" filepath="$PROJECT_DIR$/badminton_club_android.iml" />
     </modules>
   </component>
 </project>
