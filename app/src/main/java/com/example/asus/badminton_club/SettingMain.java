@@ -13,6 +13,7 @@ public class SettingMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_main);
     }
+
     public void accountClick(View View) {
         startActivity(SettingActivity.getInstance(SettingMain.this));
     }

@@ -74,7 +74,6 @@
         android:layout_marginRight="15dp"/>
 
     <Button
-        android:onClick="forgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="forgot password"
@@ -105,3 +104,4 @@
         android:layout_marginTop="96dp"
         android:layout_alignTop="@+id/imageView3" />
 </RelativeLayout>
+

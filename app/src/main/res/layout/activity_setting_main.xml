@@ -38,7 +38,8 @@
             android:text="Account" />
 
         <Button
-            android:text="Alert"
+            android:id="@+id/Club"
+            android:text="Club"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

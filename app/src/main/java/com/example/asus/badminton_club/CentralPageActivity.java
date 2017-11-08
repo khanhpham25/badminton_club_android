@@ -160,7 +160,7 @@ public class CentralPageActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "HOME";
+                    return "MAP";
                 case 1:
                     return "CLUB";
                 case 2:
