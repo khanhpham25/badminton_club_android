@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
@@ -20,13 +19,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-        <ImageView android:src="@drawable/logo"
-            android:layout_width="280dp"
-            android:layout_height="103dp"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
+
         <TextView
-            android:text="Account"
+            android:text="My Account"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -41,42 +36,61 @@
             android:src="@drawable/loginicon" />
 
         <TextView
-        android:id="@+id/textView1"
-        android:layout_marginLeft="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_marginLeft="30dp"
+            android:id="@+id/textViewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="Age"
+            android:text="Name:"
+            android:layout_marginBottom="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="Level"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_marginLeft="30dp"
+            android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="Sex"
+            android:text="Email:"
+            android:layout_marginBottom="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        <TextView
+            android:id="@+id/textViewMobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:text="Mobile:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        <TextView
+            android:id="@+id/textViewBadmintonLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:text="Skill Level:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        <TextView
+            android:id="@+id/textViewMainRackquet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Racket:"
+            android:layout_marginBottom="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
         <Button
-            android:text="Edit"
-            android:onClick="edit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#dedede"
+            android:onClick="edit"
+            android:layout_marginBottom="5dp"
+            android:text="Edit" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_light"
+            android:onClick="logout"
+            android:layout_marginBottom="5dp"
+            android:text="Sign Out" />
     </LinearLayout>
 </RelativeLayout>
 

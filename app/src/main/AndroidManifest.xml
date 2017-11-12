@@ -12,21 +12,37 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.example.asus.badminton_club.screen.main.MainActivity" />
-        <activity android:name="com.example.asus.badminton_club.screen.authenication.LoginActivity">
+        <activity android:name="com.example.asus.badminton_club.screen.authentication.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.asus.badminton_club.SettingMain" />
-        <activity android:name="com.example.asus.badminton_club.screen.authenication.ForgotPassword" />
+        <activity android:name="com.example.asus.badminton_club.screen.authentication.ForgotPassword" />
         <activity android:name="com.example.asus.badminton_club.ClubMainActivity" />
         <activity android:name="com.example.asus.badminton_club.screen.setting.SettingActivity" />
         <activity android:name="com.example.asus.badminton_club.screen.setting.SettingAccountEditActivity" />
-        <activity android:name="com.example.asus.badminton_club.screen.authenication.SignUp" />
+        <activity android:name="com.example.asus.badminton_club.screen.authentication.SignUp" />
         <activity android:name="com.example.asus.badminton_club.screen.main.HomeMain" />
         <activity android:name="com.example.asus.badminton_club.CentralPageActivity" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
 
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
