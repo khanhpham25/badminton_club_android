@@ -1,24 +1,20 @@
-package com.example.asus.badminton_club.screen.authenication;
+package com.example.asus.badminton_club.screen.authentication;
 
-import android.os.AsyncTask;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.asus.badminton_club.R;
-import com.example.asus.badminton_club.data.model.UserResponse;
+import com.example.asus.badminton_club.data.model.BaseResponse;
+import com.example.asus.badminton_club.data.model.User;
 import com.example.asus.badminton_club.data.source.remote.api.service.AppServiceClient;
 
 import org.json.JSONException;
 
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.regex.Pattern;
 
 import rx.Observer;
 import rx.Subscription;
@@ -27,6 +23,10 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 public class SignUp extends AppCompatActivity {
+    public static Intent getInstance(Context context) {
+        return new Intent(context, SignUp.class);
+    }
+
     private CompositeSubscription mCompositeSubscription;
 
     @Override
@@ -89,73 +89,43 @@ public class SignUp extends AppCompatActivity {
         String password = txtPassword.getText().toString();
         String cPassword = txtCPassword.getText().toString();
 
-        Subscription subscription = AppServiceClient.getInstance().register(name, email, password, cPassword)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<UserResponse>() {
-                    @Override
-                    public void onCompleted() {
+        if(!isValidEmaillId(email.trim())){
+          Toast.makeText(getApplicationContext(), "InValid Email Address.", Toast.LENGTH_SHORT).show();
+        } else if (!password.equals(cPassword)) {
+           Toast.makeText(SignUp.this, getString(R.string.error_password_dont_match), Toast.LENGTH_SHORT).show();
+        } else {
+            Subscription subscription = AppServiceClient.getInstance().register(name, email, password, cPassword)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<BaseResponse<User>>() {
+                        @Override
+                        public void onCompleted() {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(SignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast.makeText(SignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
 
-                    @Override
-                    public void onNext(UserResponse userResponse) {
-                        Toast.makeText(SignUp.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onNext(BaseResponse<User> userResponse) {
+                            Toast.makeText(SignUp.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            startActivity(LoginActivity.getInstance(SignUp.this));
+                        }
+                    });
 
-        mCompositeSubscription.add(subscription);
+            mCompositeSubscription.add(subscription);
+        }
     }
 
-    private class SendDeviceDetails extends AsyncTask<String, Void, String> {
+    private boolean isValidEmaillId(String email) {
 
-        @Override
-        protected String doInBackground(String... params) {
-
-            String data = "";
-
-            HttpURLConnection httpURLConnection = null;
-            try {
-
-                httpURLConnection = (HttpURLConnection) new URL(params[0]).openConnection();
-                httpURLConnection.setRequestMethod("POST");
-
-                httpURLConnection.setDoOutput(true);
-
-                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-                wr.writeBytes("PostData=" + params[1]);
-                wr.flush();
-                wr.close();
-
-                InputStream in = httpURLConnection.getInputStream();
-                InputStreamReader inputStreamReader = new InputStreamReader(in);
-
-                int inputStreamData = inputStreamReader.read();
-                while (inputStreamData != -1) {
-                    char current = (char) inputStreamData;
-                    inputStreamData = inputStreamReader.read();
-                    data += current;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (httpURLConnection != null) {
-                    httpURLConnection.disconnect();
-                }
-            }
-
-            return data;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
-        }
+        return Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
     }
 }

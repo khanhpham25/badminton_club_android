@@ -1,4 +1,4 @@
-package com.example.asus.badminton_club.screen.authenication;
+package com.example.asus.badminton_club.screen.authentication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
