@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.asus.badminton_club">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.example.asus.badminton_club.PleaseApplication"
+        android:name=".PleaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Sport Club"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -15,6 +16,7 @@
         <activity android:name="com.example.asus.badminton_club.screen.authentication.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,6 +28,9 @@
         <activity android:name="com.example.asus.badminton_club.screen.authentication.SignUp" />
         <activity android:name="com.example.asus.badminton_club.screen.main.HomeMain" />
         <activity android:name="com.example.asus.badminton_club.CentralPageActivity" />
+        <activity android:name="com.example.asus.pleaseplease.ClubList"></activity>
+        <activity android:name="com.example.asus.pleaseplease.ClubCreate" />
+        <activity android:name="com.example.asus.pleaseplease.ClubSetting"></activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 

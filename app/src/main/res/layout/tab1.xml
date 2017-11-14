@@ -1,100 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
     android:background="#6CC0EC" >
-
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="24dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:id="@+id/linearLayout3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp">
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView android:src="@drawable/logo"
+            android:layout_width="280dp"
+            android:layout_height="103dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center" />
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="CLB KAYPEE"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Next meeting: 19h00 Thu"
-            android:layout_marginBottom="20dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Khanh Pham"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:text="Impoment an adapter class. A spinner is mainly used to display only text field so we can implement Array Adapter for that. We can also use Base Adapter and other custom adapters to display a spinner with m"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            android:textSize="40dp"
+            android:layout_gravity="center"
+            android:text="MAP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="178dp"
-        android:layout_height="48dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="24dp"
-        android:text="Like"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        android:layout_marginStart="24dp" />
+</RelativeLayout>
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="173dp"
-        android:layout_height="48dp"
-        android:layout_alignBaseline="@+id/button4"
-        android:layout_alignBottom="@+id/button4"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="24dp"
-        android:text="Comment"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button4"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintLeft_toRightOf="@+id/button4"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="24dp" />
-    <TextView
-        android:text="Minh Hoang"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/button4"
-        android:layout_marginLeft="24dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="24dp"
-        android:id="@+id/textView5" />
-    <TextView
-        android:text="Hahahahaha"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        android:layout_marginLeft="50dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-</android.support.constraint.ConstraintLayout>
+
+
+
