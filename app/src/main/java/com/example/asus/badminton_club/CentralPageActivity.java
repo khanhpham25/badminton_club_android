@@ -1,5 +1,7 @@
 package com.example.asus.badminton_club;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import com.example.asus.badminton_club.data.model.User;
+import com.example.asus.badminton_club.data.source.local.UserLocalDataSource;
 
 public class CentralPageActivity extends AppCompatActivity {
 
@@ -27,6 +33,10 @@ public class CentralPageActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+
+    public static Intent getInstance(Context context){
+        return new Intent(context, CentralPageActivity.class);
+    }
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -51,6 +61,9 @@ public class CentralPageActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        User currentUser = new UserLocalDataSource(CentralPageActivity.this).getCurrentUser();
+        Log.d("Main", "onCreate: "+ currentUser.getEmail());
     }
 
 

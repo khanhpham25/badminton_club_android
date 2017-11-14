@@ -9,7 +9,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:background="@drawable/loginpic"
-    tools:context="com.example.asus.badminton_club.screen.authenication.LoginActivity">
+    tools:context="com.example.asus.badminton_club.screen.authentication.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -40,14 +40,18 @@
         android:id="@+id/linearLayout">
 
         <EditText
+            android:id="@+id/txtLoginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email..."/>
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
 
         <EditText
+            android:id="@+id/txtLoginPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password..."/>
+            android:hint="Password"
+            android:inputType="textPassword" />
 
         <Button
             android:onClick="login"
@@ -62,27 +66,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="create account"
-        android:layout_above="@+id/button"
-        android:layout_alignLeft="@+id/linearLayout"
-        android:layout_alignStart="@+id/linearLayout" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
-        android:layout_alignEnd="@+id/linearLayout"
-        android:layout_alignRight="@+id/linearLayout"
-        android:onClick="forgot"
-        android:text="forgot password" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_above="@+id/login_button"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="sign In with facebook" />
+        android:layout_alignLeft="@+id/linearLayout"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_marginBottom="45dp"
+        android:layout_marginRight="15dp"/>
+
+    <Button
+        android:onClick="forgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="forgot password"
+        android:layout_above="@+id/login_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="45dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/button2" />
+
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"/>
 
     <ImageView
         android:layout_centerInParent="true"

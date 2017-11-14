@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">Please Please</string>
+    <string name="facebook_app_id">1883134291716182</string>
+    <string name="fb_login_protocol_scheme">fb1883134291716182</string>
+    <string name="app_name">Badminton Club</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="error_password_dont_match">Passwords don\'t match</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -32,10 +32,10 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <Button
-            android:text="Account"
-            android:onClick="accousdfnt"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:onClick="accountClick"
+            android:text="Account" />
 
         <Button
             android:text="Alert"
