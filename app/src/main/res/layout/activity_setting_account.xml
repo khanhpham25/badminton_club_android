@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
@@ -11,9 +12,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="24dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:weightSum="1"
         android:id="@+id/linearLayout2"
         android:layout_alignParentTop="true"
@@ -21,75 +21,209 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:text="My Account"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"/>
-
-        <ImageView
-            android:id="@+id/imageView"
             android:layout_gravity="center"
-            android:layout_width="78dp"
-            android:layout_height="81dp"
-            android:src="@drawable/loginicon" />
+            android:layout_marginBottom="10dp"
+            android:textSize="25dp"
+            android:text="My Account"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#6CC0EC"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/imageViewUserAvatar"
+                android:layout_width="78dp"
+                android:layout_height="81dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/loginicon" />
+
+            <Button
+                android:id="@+id/button_select_image"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:onClick="uploadAvatar"
+                android:text="Select Image"
+                android:layout_marginTop="15dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewLabelName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Name"
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="Name:"
+            android:layout_marginBottom="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#FF666666"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dedede"/>
+
+        <TextView
+            android:id="@+id/textViewLabelEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Email"
+            android:textSize="20dp"
             android:layout_marginBottom="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
         <TextView
             android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="Email:"
+            android:textSize="15dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#FF666666"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dedede"/>
+
+        <TextView
+            android:id="@+id/textViewLabelGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Gender"
+            android:textSize="20dp"
             android:layout_marginBottom="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <TextView
+            android:id="@+id/textViewGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textSize="15dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#FF666666"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dedede"/>
+
+        <TextView
+            android:id="@+id/textViewLabelMobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:text="Mobile"
+            android:textSize="20dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
         <TextView
             android:id="@+id/textViewMobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="5dp"
-            android:text="Mobile:"
+            android:textSize="15dp"
+            android:textColor="#FF666666"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dedede"/>
+
+        <TextView
+            android:id="@+id/textViewLabelBadmintonLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:text="Skill Level"
+            android:textSize="20dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
         <TextView
             android:id="@+id/textViewBadmintonLevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="5dp"
-            android:text="Skill Level:"
+            android:textSize="15dp"
+            android:textColor="#FF666666"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dedede"/>
+
+        <TextView
+            android:id="@+id/textViewLabelMainRackquet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Racket"
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
         <TextView
             android:id="@+id/textViewMainRackquet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="Racket:"
+            android:textSize="15dp"
             android:layout_marginBottom="5dp"
+            android:textColor="#FF666666"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="#dedede"/>
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginBottom="5dp"
             android:background="#dedede"
             android:onClick="edit"
-            android:layout_marginBottom="5dp"
             android:text="Edit" />
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginBottom="5dp"
             android:background="@android:color/holo_red_light"
             android:onClick="logout"
-            android:layout_marginBottom="5dp"
             android:text="Sign Out" />
     </LinearLayout>
 </RelativeLayout>

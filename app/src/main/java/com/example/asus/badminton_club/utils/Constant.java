@@ -5,5 +5,6 @@ package com.example.asus.badminton_club.utils;
  */
 
 public class Constant {
+    public static final String BASE_URL = "https://badminton-server.herokuapp.com";
     public static final String END_POINT_URL = "https://badminton-server.herokuapp.com/api/";
 }
