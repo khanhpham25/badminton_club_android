@@ -4,8 +4,17 @@ import com.example.asus.badminton_club.data.model.BaseResponse;
 import com.example.asus.badminton_club.data.model.User;
 import com.example.asus.badminton_club.data.model.UserResponse;
 
+import java.io.File;
+
+import okhttp3.MultipartBody;
 import retrofit2.http.DELETE;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -20,10 +29,31 @@ public interface AppApi {
                                       @Query("user[password]") String password,
                                       @Query("user[password_confirmation]") String passwordConfirm);
 
+    @Multipart
+    @PATCH("users/{id}")
+    Observable<BaseResponse<User>> uploadAvatar(@Path("id") int id,
+                                            @Part MultipartBody.Part file,
+                                            @Header("Authorization") String auth_token);
+
+    @PATCH("users/{id}")
+    Observable<BaseResponse<User>> updateUserInfo(@Path("id") int id,
+                                                  @Query("user[name]") String name,
+                                                  @Query("user[mobile]") String mobile,
+                                                  @Query("user[main_rackquet]") String main_racket,
+                                                  @Query("user[gender]") Integer gender,
+                                                  @Query("user[badminton_level]") Integer skill,
+                                                  @Header("Authorization") String auth_token);
+
     @POST("users/sign_in")
     Observable<BaseResponse<User>> login (@Query("session[email]") String email,
                             @Query("session[password]") String password);
 
     @DELETE("users/sign_out")
     Observable<BaseResponse> logout (@Query("auth_token") String auth_token);
+
+    @POST("auth/omniauths")
+    Observable<BaseResponse<User>> omniauth_login (@Query("session[email]") String email,
+                                                   @Query("session[provider]") String name,
+                                                   @Query("session[provider]") String provider,
+                                                   @Query("session[auth_token]") String auth_token);
 }

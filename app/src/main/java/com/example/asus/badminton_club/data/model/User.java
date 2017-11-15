@@ -18,6 +18,9 @@ public class User {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("gender")
+    @Expose
+    private Integer gender;
     @SerializedName("mobile")
     @Expose
     private String mobile;
@@ -26,10 +29,13 @@ public class User {
     private Integer badmintonLevel;
     @SerializedName("avatar")
     @Expose
-    private Object avatar;
+    private Avatar avatar;
     @SerializedName("main_rackquet")
     @Expose
     private String mainRackquet;
+    @SerializedName("provider")
+    @Expose
+    private String provider;
     @SerializedName("is_admin")
     @Expose
     private Object isAdmin;
@@ -44,7 +50,7 @@ public class User {
     private String updatedAt;
     @SerializedName("auth_token")
     @Expose
-    private String authToken;
+    private String authToken;;
 
     public Integer getId() {
         return id;
@@ -70,6 +76,10 @@ public class User {
         this.name = name;
     }
 
+    public Integer getGender() { return gender; }
+
+    public void setGender(Integer gender) { this.gender = gender; }
+
     public String getMobile() {
         return mobile;
     }
@@ -78,19 +88,17 @@ public class User {
         this.mobile = mobile;
     }
 
-    public Integer getBadmintonLevel() {
-        return badmintonLevel;
-    }
+    public Integer getBadmintonLevel() { return badmintonLevel; }
 
     public void setBadmintonLevel(Integer badmintonLevel) {
         this.badmintonLevel = badmintonLevel;
     }
 
-    public Object getAvatar() {
+    public Avatar getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Object avatar) {
+    public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
     }
 
@@ -101,6 +109,10 @@ public class User {
     public void setMainRackquet(String mainRackquet) {
         this.mainRackquet = mainRackquet;
     }
+
+    public String getProvider() { return provider; }
+
+    public void setProvider(String provider) { this.provider = provider; }
 
     public Object getIsAdmin() {
         return isAdmin;
