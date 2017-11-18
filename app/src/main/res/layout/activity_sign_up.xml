@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:background="#6CC0EC"
         android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:paddingTop="24dp">
 
         <ImageView
