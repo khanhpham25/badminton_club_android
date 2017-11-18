@@ -255,6 +255,7 @@ public class SettingActivity extends AppCompatActivity {
         File file = new File(RealPathUtil.getRealPathFromURI_API19(SettingActivity.this, uri));
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),
                 file);
+
         MultipartBody.Part filePart =
                MultipartBody.Part.createFormData("user[avatar]", file.getName(), requestBody);
 

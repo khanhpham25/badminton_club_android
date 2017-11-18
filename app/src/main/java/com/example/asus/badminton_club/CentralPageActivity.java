@@ -49,8 +49,6 @@ public class CentralPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_central_page);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -63,7 +61,6 @@ public class CentralPageActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         User currentUser = new UserLocalDataSource(CentralPageActivity.this).getCurrentUser();
-        Log.d("Main", "onCreate: "+ currentUser.getEmail());
     }
 
 
@@ -160,7 +157,7 @@ public class CentralPageActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "HOME";
+                    return "MAP";
                 case 1:
                     return "CLUB";
                 case 2:

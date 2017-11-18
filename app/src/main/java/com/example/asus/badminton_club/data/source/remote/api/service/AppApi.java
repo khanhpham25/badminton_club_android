@@ -1,13 +1,17 @@
 package com.example.asus.badminton_club.data.source.remote.api.service;
 
 import com.example.asus.badminton_club.data.model.BaseResponse;
+import com.example.asus.badminton_club.data.model.Club;
 import com.example.asus.badminton_club.data.model.User;
 import com.example.asus.badminton_club.data.model.UserResponse;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
@@ -56,4 +60,16 @@ public interface AppApi {
                                                    @Query("session[provider]") String name,
                                                    @Query("session[provider]") String provider,
                                                    @Query("session[auth_token]") String auth_token);
+
+    @POST("clubs")
+    Observable<BaseResponse<Club>> createClub(@Query("club[name]") String userName,
+                                            @Query("club[location]") String location,
+                                            @Query("club[is_recruiting]") Boolean isRecruiting,
+                                            @Query("club[allow_friendly_match]") Boolean allowMatch,
+                                            @Query("club[user_clubs_attributes][0][user_id]") Integer userId,
+                                            @Query("club[user_clubs_attributes][0][is_owner]") Boolean isOwner);
+
+    @GET("clubs")
+    Observable<BaseResponse<ArrayList<Club>>> getAllClubs();
+
 }

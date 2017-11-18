@@ -27,6 +27,8 @@
         <activity android:name="com.example.asus.badminton_club.screen.authentication.SignUp" />
         <activity android:name="com.example.asus.badminton_club.screen.main.HomeMain" />
         <activity android:name="com.example.asus.badminton_club.CentralPageActivity" />
+        <activity android:name="com.example.asus.badminton_club.ClubCreate" />
+        <activity android:name="com.example.asus.badminton_club.ClubSetting"></activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
