@@ -1,109 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
     android:background="#6CC0EC" >
 
     <LinearLayout
-        android:padding="12dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:padding="12dp"
-            android:layout_marginBottom="40dp"
-            android:orientation="vertical"
-            android:gravity="center"
+        <TextView
+            android:id="@+id/tv_club_name"
+            android:drawableLeft="@drawable/ic_star"
+            android:drawableRight="@drawable/ic_star"
+            android:text="CLUB PAGE"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_marginBottom="20dp"
-                android:text="CLUB PAGE"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
             <ImageView
-                android:src="@drawable/loginicon"
-                android:layout_width="150dp"
-                android:layout_height="150dp" />
-        </LinearLayout>
+                android:id="@+id/iv_club_avatar"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/loginicon"/>
+
+            <Button
+                android:id="@+id/button_select_image"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginLeft="8dp"
+                android:onClick="uploadAvatar"
+                android:text="  Select Image"
+                android:textSize="12sp"
+                android:drawableLeft="@drawable/ic_upload"
+                app:layout_constraintStart_toEndOf="@+id/iv_club_avatar" />
+
+            <Button
+                android:id="@+id/button_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="8dp"
+                android:drawableLeft="@drawable/ic_edit"
+                android:onClick="editClub"
+                android:text="  Edit Club"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_club_avatar"
+                app:layout_constraintTop_toBottomOf="@+id/button_select_image" />
+
+        </android.support.constraint.ConstraintLayout>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_height="1dp"
+                android:background="#dedede"/>
+            <TextView
+                android:text="Info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dedede"/>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <TextView
-                    android:text="Club Name : "
+                    android:layout_marginLeft="5dp"
+                    android:text="Average Level: "
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/textViewShowClubName"
+                    android:id="@+id/tv_avg_level"
+                    android:text="Professional"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:text="Location: "
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tv_location"
                     android:text="KAYPEEE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:text="Tag Name : "
+                    android:layout_marginLeft="5dp"
+                    android:text="Description: "
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
-                android:text="CANNOT BE CHANGED"
-                android:layout_width="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/tv_description"
+                    android:text="CANNOT BE CHANGED"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#dedede"/>
+            <TextView
+                android:text="Status"
+                android:gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dedede"
+                android:layout_marginBottom="2dp"/>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:text="Club Description : "
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="Allow Friendly Match "
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/iv_allow_match"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_deny"/>
                 <TextView
-                    android:text="ONLY FOR KAYYYYYYYYYYYYYYYY"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#dedede"/>
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:text="Member Recruiting  "
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/iv_recruiting"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_active"/>
             </LinearLayout>
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dedede"/>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:text="Club Level : "
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                   android:text="Good"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="Match Making status : "
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:text="Open"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
 
             </LinearLayout>
         </LinearLayout>

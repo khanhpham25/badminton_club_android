@@ -101,6 +101,7 @@ public class Tab2Fragment extends Fragment {
         mRecyclerView.addOnItemTouchListener(
                 new ClubRecyclerTouchListener(getActivity(), new ClubRecyclerTouchListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
+                        isLoaded = false;
                         Intent intent = new Intent(getActivity(), ClubMainActivity.class);
                         intent.putExtra("selected_club", listClubs.get(position));
                         startActivity(intent);
