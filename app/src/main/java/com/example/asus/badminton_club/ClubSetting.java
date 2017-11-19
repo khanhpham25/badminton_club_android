@@ -1,5 +1,8 @@
 package com.example.asus.badminton_club;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,38 +10,70 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.asus.badminton_club.data.model.BaseResponse;
+import com.example.asus.badminton_club.data.model.Club;
+import com.example.asus.badminton_club.data.model.User;
+import com.example.asus.badminton_club.data.source.local.UserLocalDataSource;
+import com.example.asus.badminton_club.data.source.remote.api.error.BaseException;
+import com.example.asus.badminton_club.data.source.remote.api.error.SafetyError;
+import com.example.asus.badminton_club.data.source.remote.api.service.AppServiceClient;
+import com.example.asus.badminton_club.screen.setting.SettingAccountEditActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by khanh on 15/11/2017.
  */
 
 public class ClubSetting extends AppCompatActivity {
+    public static Intent getInstance(Context context) {
+        return new Intent(context, ClubSetting.class);
+    }
+
+    private ProgressDialog mProgressDialog;
+    private CompositeSubscription mCompositeSubscription;
+    private Club currentClub;
+    private EditText edtName;
+    private EditText edtLocation;
+    private EditText edtDescription;
+    private Spinner spinnerClubLevel;
+    private Switch swAllowMatch;
+    private Switch swRecruiting;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club_setting);
-        // Get reference of widgets from XML layout
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner2);
+        mCompositeSubscription = new CompositeSubscription();
 
-        // Initializing a String Array
+        currentClub = (Club) getIntent().getSerializableExtra("current_club");
+
+        spinnerClubLevel = findViewById(R.id.spinnerClubLevel);
+
         String[] plants = new String[]{
-                "Club Level ...",
-                "High",
-                "Medium",
-                "Low"
+                "Choose club average skill level",
+                "Beginner",
+                "Amateur",
+                "Professional"
         };
 
         final List<String> plantsList = new ArrayList<>(Arrays.asList(plants));
-        // Initializing an ArrayAdapter
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                this,R.layout.spinner_item,plantsList){
+                this,R.layout.spinner_item, plantsList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
@@ -67,23 +102,76 @@ public class ClubSetting extends AppCompatActivity {
             }
          };
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinner.setAdapter(spinnerArrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItemText = (String) parent.getItemAtPosition(position);
-                // If user change the default selection
-                // First item is disable and it is used for hint
-                if(position > 0){
-                    // Notify the selected item text
-                    Toast.makeText
-                            (getApplicationContext(), "Club Level : " + selectedItemText, Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        spinnerClubLevel.setAdapter(spinnerArrayAdapter);
+
+        edtName = findViewById(R.id.edtClubName);
+        edtLocation = findViewById(R.id.edtClubLocation);
+        edtDescription = findViewById(R.id.edtClubDescription);
+        swAllowMatch = findViewById(R.id.swAllowMatch);
+        swRecruiting = findViewById(R.id.swRecruiting);
+
+        edtName.setText(currentClub.getName());
+        edtLocation.setText(currentClub.getLocation());
+        edtDescription.setText(currentClub.getDescription());
+        swAllowMatch.setChecked(currentClub.getAllowFriendlyMatch());
+        swRecruiting.setChecked(currentClub.getRecruiting());
+
+        if(currentClub.getAverageLevel() == null || currentClub.getAverageLevel() == 0) {
+            spinnerClubLevel.setSelection(-1);
+        } else {
+            spinnerClubLevel.setSelection(currentClub.getAverageLevel());
+        }
+
+        mProgressDialog = new ProgressDialog(ClubSetting.this);
+        mProgressDialog.setTitle("Create Club");
+        mProgressDialog.setMessage("Processing...");
+        mProgressDialog.setIndeterminate(false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mCompositeSubscription.clear();
+        super.onDestroy();
+    }
+
+    public void saveClubChanges(View view) {
+        User currentUser = new UserLocalDataSource(ClubSetting.this).getCurrentUser();
+
+        String updateName = edtName.getText().toString();
+        String updateLocation = edtLocation.getText().toString();
+        String updateDescription = edtDescription.getText().toString();
+        Integer updateLevel = spinnerClubLevel.getSelectedItemPosition();
+        Boolean updateAllowMatch = swAllowMatch.isChecked();
+        Boolean updateRecruiting = swRecruiting.isChecked();
+
+        if (!updateName.trim().equals("")) {
+            mProgressDialog.show();
+            Subscription subscription = AppServiceClient.getInstance().updateClubInfo(currentClub.getId(),
+                    updateName, updateLocation, updateDescription, updateLevel, updateRecruiting, updateAllowMatch,
+                    currentUser.getAuthToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<BaseResponse<Club>>() {
+                        @Override
+                        public void call(BaseResponse<Club> club) {
+                            mProgressDialog.dismiss();
+                            Toast.makeText(ClubSetting.this, "Update succesfully!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            intent.putExtra("updatedClub", club.getData());
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    }, new SafetyError() {
+                        @Override
+                        public void onSafetyError(BaseException error) {
+                            mProgressDialog.dismiss();
+                            Toast.makeText(ClubSetting.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            mCompositeSubscription.add(subscription);
+        } else {
+            Toast.makeText(ClubSetting.this, "Name can't be blank", Toast.LENGTH_SHORT).show();
+        }
     }
 }

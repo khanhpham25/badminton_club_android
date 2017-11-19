@@ -104,7 +104,7 @@ public class SettingActivity extends AppCompatActivity {
             request.setParameters(parameters);
             request.executeAsync();
         } else {
-            if (currentUser.getAvatar() == null) {
+            if (currentUser.getAvatar() == null || currentUser.getAvatar().getUrl() == null || currentUser.getAvatar().getUrl().equals("")) {
                 imgViewUserAva.setImageDrawable(getDrawable(R.drawable.loginpic));
             } else {
                 Glide.with(SettingActivity.this).load(Constant.BASE_URL + currentUser.getAvatar().getUrl()).into(imgViewUserAva);
@@ -259,7 +259,7 @@ public class SettingActivity extends AppCompatActivity {
         MultipartBody.Part filePart =
                MultipartBody.Part.createFormData("user[avatar]", file.getName(), requestBody);
 
-        Subscription subscription = AppServiceClient.getInstance().uploadAvatar(currentUser.getId(), filePart,
+        Subscription subscription = AppServiceClient.getInstance().uploadUserAvatar(currentUser.getId(), filePart,
                                                                                 currentUser.getAuthToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -278,13 +278,6 @@ public class SettingActivity extends AppCompatActivity {
                 });
 
         mCompositeSubscription.add(subscription);
-    }
-
-    public int getImage(String imageName) {
-
-        int drawableResourceId = SettingActivity.this.getResources().getIdentifier(imageName, "drawable", SettingActivity.this.getPackageName());
-
-        return drawableResourceId;
     }
 
     private Bundle getFacebookData(JSONObject object) {

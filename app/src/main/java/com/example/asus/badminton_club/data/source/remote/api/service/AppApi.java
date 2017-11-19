@@ -35,7 +35,7 @@ public interface AppApi {
 
     @Multipart
     @PATCH("users/{id}")
-    Observable<BaseResponse<User>> uploadAvatar(@Path("id") int id,
+    Observable<BaseResponse<User>> uploadUserAvatar(@Path("id") int id,
                                             @Part MultipartBody.Part file,
                                             @Header("Authorization") String auth_token);
 
@@ -62,7 +62,7 @@ public interface AppApi {
                                                    @Query("session[auth_token]") String auth_token);
 
     @POST("clubs")
-    Observable<BaseResponse<Club>> createClub(@Query("club[name]") String userName,
+    Observable<BaseResponse<Club>> createClub(@Query("club[name]") String clubName,
                                             @Query("club[location]") String location,
                                             @Query("club[is_recruiting]") Boolean isRecruiting,
                                             @Query("club[allow_friendly_match]") Boolean allowMatch,
@@ -72,4 +72,19 @@ public interface AppApi {
     @GET("clubs")
     Observable<BaseResponse<ArrayList<Club>>> getAllClubs();
 
+    @Multipart
+    @PATCH("clubs/{id}")
+    Observable<BaseResponse<Club>> uploadClubAvatar(@Path("id") int id,
+                                                @Part MultipartBody.Part file,
+                                                @Header("Authorization") String auth_token);
+
+    @PATCH("clubs/{id}")
+    Observable<BaseResponse<Club>> updateClubInfo(@Path("id") int id,
+                                              @Query("club[name]") String clubName,
+                                              @Query("club[location]") String location,
+                                              @Query("club[description]") String description,
+                                              @Query("club[average_level]") Integer averageLevel,
+                                              @Query("club[is_recruiting]") Boolean isRecruiting,
+                                              @Query("club[allow_friendly_match]") Boolean allowMatch,
+                                              @Header("Authorization") String auth_token);
 }

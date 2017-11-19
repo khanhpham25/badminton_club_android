@@ -64,7 +64,7 @@ public class ClubCustomAdapter extends RecyclerView.Adapter<ClubCustomAdapter.Vi
         holder.txtLocation.setText(club.getLocation());
         holder.txtDescription.setText(club.getDescription());
 
-        if (club.getAvatar() == null || club.getAvatar().getUrl().equals("")) {
+        if (club.getAvatar() == null || club.getAvatar().getUrl() == null || club.getAvatar().getUrl().equals("")) {
             holder.avatar.setImageDrawable(mContext.getDrawable(R.drawable.loginpic));
         } else {
             Glide.with(mContext).load(Constant.BASE_URL + club.getAvatar().getUrl()).into(holder.avatar);

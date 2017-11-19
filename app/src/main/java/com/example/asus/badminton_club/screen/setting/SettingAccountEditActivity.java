@@ -39,12 +39,12 @@ public class SettingAccountEditActivity extends AppCompatActivity {
     }
 
     private User currentUser;
+    private CompositeSubscription mCompositeSubscription;
     private EditText editName;
     private EditText editMobile;
     private EditText editMainRacket;
     private Spinner spinnerSex;
     private Spinner spinnerSkill;
-    private CompositeSubscription mCompositeSubscription;
 
 
     @Override

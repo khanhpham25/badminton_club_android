@@ -36,7 +36,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create Club"/>
+            android:text="Create Club"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab1"
@@ -62,7 +64,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FabTitle2"/>
+            android:text="FabTitle2"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab2"
@@ -89,7 +93,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FabTitle3"/>
+            android:text="FabTitle3"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab3"
