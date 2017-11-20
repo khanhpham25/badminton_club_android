@@ -87,4 +87,13 @@ public interface AppApi {
                                               @Query("club[is_recruiting]") Boolean isRecruiting,
                                               @Query("club[allow_friendly_match]") Boolean allowMatch,
                                               @Header("Authorization") String auth_token);
+
+    @POST("password_resets")
+    Observable<BaseResponse<User>> submitEmail (@Query("password_reset[email]") String email);
+
+    @PATCH("password_resets")
+    Observable<BaseResponse<User>> resetPassword(@Query("email") String email,
+                                                    @Query("user[reset_digest]") String resetToken,
+                                                    @Query("user[password]") String password,
+                                                    @Query("user[password_confirmation]") String cPassword);
 }

@@ -123,7 +123,7 @@ public class ClubSetting extends AppCompatActivity {
         }
 
         mProgressDialog = new ProgressDialog(ClubSetting.this);
-        mProgressDialog.setTitle("Create Club");
+        mProgressDialog.setTitle("Update Info");
         mProgressDialog.setMessage("Processing...");
         mProgressDialog.setIndeterminate(false);
     }

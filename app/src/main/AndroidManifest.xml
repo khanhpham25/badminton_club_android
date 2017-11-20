@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.asus.badminton_club">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.example.asus.badminton_club.PleaseApplication"
+        android:name=".PleaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.asus.badminton_club.screen.main.MainActivity" />
-        <activity android:name="com.example.asus.badminton_club.screen.authentication.LoginActivity">
+        <activity android:name=".screen.main.MainActivity" />
+        <activity android:name=".screen.authentication.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.asus.badminton_club.SettingMain" />
-        <activity android:name="com.example.asus.badminton_club.screen.authentication.ForgotPassword" />
-        <activity android:name="com.example.asus.badminton_club.ClubMainActivity" />
-        <activity android:name="com.example.asus.badminton_club.screen.setting.SettingActivity" />
-        <activity android:name="com.example.asus.badminton_club.screen.setting.SettingAccountEditActivity" />
-        <activity android:name="com.example.asus.badminton_club.screen.authentication.SignUp" />
-        <activity android:name="com.example.asus.badminton_club.screen.main.HomeMain" />
-        <activity android:name="com.example.asus.badminton_club.CentralPageActivity" />
-        <activity android:name="com.example.asus.badminton_club.ClubCreate" />
-        <activity android:name="com.example.asus.badminton_club.ClubSetting"></activity>
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <activity android:name=".SettingMain" />
+        <activity android:name=".screen.authentication.ForgotPassword" />
+        <activity android:name=".ClubMainActivity" />
+        <activity android:name=".screen.setting.SettingActivity" />
+        <activity android:name=".screen.setting.SettingAccountEditActivity" />
+        <activity android:name=".screen.authentication.SignUp" />
+        <activity android:name=".screen.main.HomeMain" />
+        <activity android:name=".CentralPageActivity" />
+        <activity android:name=".ClubCreate" />
+        <activity android:name=".ClubSetting" />
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:label="@string/title_activity_reset_password"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
