@@ -28,7 +28,6 @@ public class ClubCustomAdapter extends RecyclerView.Adapter<ClubCustomAdapter.Vi
     private ArrayList<Club> dataSet;
     private Context mContext;
 
-    // View lookup cache
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtName;
         public TextView txtLocation;
