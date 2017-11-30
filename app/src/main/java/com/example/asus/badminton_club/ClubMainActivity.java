@@ -1,16 +1,21 @@
 package com.example.asus.badminton_club;
 
+import android.animation.Animator;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +32,7 @@ import com.example.asus.badminton_club.utils.Constant;
 import com.example.asus.badminton_club.utils.RealPathUtil;
 
 import java.io.File;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -49,6 +55,8 @@ public class ClubMainActivity extends AppCompatActivity{
     public final static int READ_EXTERNAL_REQUEST = 2;
 
     private CompositeSubscription mCompositeSubscription;
+    private ProgressDialog mProgressDialog;
+    private User currentUser;
     private ImageView ivAvatar;
     private Club selectedClub;
     private TextView tvName;
@@ -57,12 +65,89 @@ public class ClubMainActivity extends AppCompatActivity{
     private TextView tvAvgLevel;
     private ImageView ivAllowMatch;
     private ImageView ivRecruiting;
+    private FloatingActionButton fab, fab1, fab2, fab3, fab4, fab5;
+    private LinearLayout fabLayout1, fabLayout2, fabLayout3, fabLayout4, fabLayout5;
+    private View fabBGLayout;
+    private boolean isFABOpen=false;
+    private Button btnJoinClub;
+    private Button btnOutClub;
+    private Button btnCancelJoin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club_main);
         mCompositeSubscription = new CompositeSubscription();
+
+        mProgressDialog = new ProgressDialog(ClubMainActivity.this);
+
+        currentUser = new UserLocalDataSource(ClubMainActivity.this).getCurrentUser();
+
+        fabLayout1= findViewById(R.id.fabLayoutClubShow1);
+        fabLayout2= findViewById(R.id.fabLayoutClubShow2);
+        fabLayout3= findViewById(R.id.fabLayoutClubShow3);
+        fabLayout4= findViewById(R.id.fabLayoutClubShow4);
+        fabLayout5= findViewById(R.id.fabLayoutClubShow5);
+        fab = findViewById(R.id.fabClubShow);
+        fab1 = findViewById(R.id.fabClubShow1);
+        fab2 = findViewById(R.id.fabClubShow2);
+        fab3 = findViewById(R.id.fabClubShow3);
+        fab4 = findViewById(R.id.fabClubShow4);
+        fab5 = findViewById(R.id.fabClubShow5);
+        fabBGLayout = findViewById(R.id.fabBGLayoutClubShow);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isFABOpen){
+                    showFABMenu();
+                }else{
+                    closeFABMenu();
+                }
+            }
+        });
+
+
+        fabBGLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeFABMenu();
+            }
+        });
+
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        fab4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        fab5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editClub();
+                closeFABMenu();
+            }
+        });
 
         selectedClub = (Club) getIntent().getSerializableExtra("selected_club");
         tvName = findViewById(R.id.tv_club_name);
@@ -72,6 +157,39 @@ public class ClubMainActivity extends AppCompatActivity{
         ivAllowMatch = findViewById(R.id.iv_allow_match);
         ivRecruiting = findViewById(R.id.iv_recruiting);
         ivAvatar = findViewById(R.id.iv_club_avatar);
+
+        btnJoinClub = findViewById(R.id.btnJoinClub);
+        btnOutClub = findViewById(R.id.btnOutClub);
+        btnCancelJoin = findViewById(R.id.btnCancelJoin);
+
+        btnJoinClub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinClub();
+            }
+        });
+
+        btnCancelJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelJoin();
+            }
+        });
+
+        if(currentUser.getOwnedClubIds().contains(selectedClub.getId()) ||
+                currentUser.getMemberClubIds().contains(selectedClub.getId())) {
+            btnJoinClub.setVisibility(View.GONE);
+            btnCancelJoin.setVisibility(View.GONE);
+            btnOutClub.setVisibility(View.VISIBLE);
+        } else if (currentUser.getRequestedClubIds().contains(selectedClub.getId())) {
+            btnJoinClub.setVisibility(View.GONE);
+            btnOutClub.setVisibility(View.GONE);
+            btnCancelJoin.setVisibility(View.VISIBLE);
+        } else {
+            btnJoinClub.setVisibility(View.VISIBLE);
+            btnOutClub.setVisibility(View.GONE);
+            btnCancelJoin.setVisibility(View.GONE);
+        }
 
         setDataToView(selectedClub);
     }
@@ -117,10 +235,108 @@ public class ClubMainActivity extends AppCompatActivity{
         }
     }
 
-    public void editClub(View view) {
+    public void editClub() {
         Intent intent = ClubSetting.getInstance(ClubMainActivity.this);
         intent.putExtra("current_club", selectedClub);
         startActivityForResult(intent, 0);
+    }
+
+    public void joinClub() {
+        mProgressDialog.setTitle("Join Club");
+        mProgressDialog.setMessage("Processing...");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.show();
+        Subscription subscription = AppServiceClient.getInstance().joinClub(currentUser.getId(), selectedClub.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<BaseResponse<User>>() {
+                    @Override
+                    public void call(BaseResponse<User> club) {
+                        Toast.makeText(ClubMainActivity.this, club.getMessage(), Toast.LENGTH_LONG).show();
+                        List<Integer> listRequest = currentUser.getRequestedClubIds();
+                        listRequest.add(selectedClub.getId());
+                        currentUser.setRequestedClubIds(listRequest);
+                        btnJoinClub.setVisibility(View.GONE);
+                        btnOutClub.setVisibility(View.GONE);
+                        btnCancelJoin.setVisibility(View.VISIBLE);
+                        mProgressDialog.dismiss();
+                    }
+                }, new SafetyError() {
+                    @Override
+                    public void onSafetyError(BaseException error) {
+                        mProgressDialog.dismiss();
+                        Toast.makeText(ClubMainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        mCompositeSubscription.add(subscription);
+    }
+
+    public void cancelJoin() {
+        mProgressDialog.setTitle("Cancel Request");
+        mProgressDialog.setMessage("Cancelling...");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.show();
+        Subscription subscription = AppServiceClient.getInstance().cancelJoinRequest(currentUser.getId(),
+                selectedClub.getId(), currentUser.getAuthToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<BaseResponse<User>>() {
+                    @Override
+                    public void call(BaseResponse<User> club) {
+                        Toast.makeText(ClubMainActivity.this, "Request Cancelled", Toast.LENGTH_LONG).show();
+                        List<Integer> listRequest = currentUser.getRequestedClubIds();
+                        listRequest.remove(Integer.valueOf(selectedClub.getId()));
+                        currentUser.setRequestedClubIds(listRequest);
+                        btnJoinClub.setVisibility(View.VISIBLE);
+                        btnOutClub.setVisibility(View.GONE);
+                        btnCancelJoin.setVisibility(View.GONE);
+                        mProgressDialog.dismiss();
+                    }
+                }, new SafetyError() {
+                    @Override
+                    public void onSafetyError(BaseException error) {
+                        mProgressDialog.dismiss();
+                        Toast.makeText(ClubMainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        mCompositeSubscription.add(subscription);
+    }
+
+    public void outClub() {
+        mProgressDialog.setTitle("Out Club");
+        mProgressDialog.setMessage("Processing...");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.show();
+        Subscription subscription = AppServiceClient.getInstance().outClub(currentUser.getId(),
+                selectedClub.getId(), currentUser.getAuthToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<BaseResponse<User>>() {
+                    @Override
+                    public void call(BaseResponse<User> club) {
+                        Toast.makeText(ClubMainActivity.this, "See you next time", Toast.LENGTH_SHORT).show();
+                        List<Integer> listOwnedClub = currentUser.getOwnedClubIds();
+                        List<Integer> listMemberClub = currentUser.getMemberClubIds();
+                        listOwnedClub.remove(Integer.valueOf(selectedClub.getId()));
+                        listMemberClub.remove(Integer.valueOf(selectedClub.getId()));
+                        currentUser.setRequestedClubIds(listOwnedClub);
+                        currentUser.setRequestedClubIds(listMemberClub);
+                        btnJoinClub.setVisibility(View.VISIBLE);
+                        btnOutClub.setVisibility(View.GONE);
+                        btnCancelJoin.setVisibility(View.GONE);
+                        mProgressDialog.dismiss();
+                    }
+                }, new SafetyError() {
+                    @Override
+                    public void onSafetyError(BaseException error) {
+                        mProgressDialog.dismiss();
+                        Toast.makeText(ClubMainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        mCompositeSubscription.add(subscription);
     }
 
     public void uploadAvatar(View view) {
@@ -177,15 +393,16 @@ public class ClubMainActivity extends AppCompatActivity{
 
     public void uploadFiles(Uri uri) {
         if (uri == null) return;
-        User currentUser = new UserLocalDataSource(ClubMainActivity.this).getCurrentUser();
-
+        mProgressDialog.setTitle("Upload Avatar");
+        mProgressDialog.setMessage("Uploading...");
+        mProgressDialog.setIndeterminate(false);
         File file = new File(RealPathUtil.getRealPathFromURI_API19(ClubMainActivity.this, uri));
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),
                 file);
 
         MultipartBody.Part filePart =
                 MultipartBody.Part.createFormData("club[avatar]", file.getName(), requestBody);
-
+        mProgressDialog.show();
         Subscription subscription = AppServiceClient.getInstance().uploadClubAvatar(selectedClub.getId(), filePart,
                 currentUser.getAuthToken())
                 .subscribeOn(Schedulers.io())
@@ -196,14 +413,71 @@ public class ClubMainActivity extends AppCompatActivity{
                         Toast.makeText(ClubMainActivity.this, "Upload succesfully!", Toast.LENGTH_SHORT).show();
                         Glide.with(ClubMainActivity.this).load(Constant.BASE_URL + club.getData().getAvatar().getUrl())
                                 .into(ivAvatar);
+                        mProgressDialog.dismiss();
                     }
                 }, new SafetyError() {
                     @Override
                     public void onSafetyError(BaseException error) {
+                        mProgressDialog.dismiss();
                         Toast.makeText(ClubMainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
         mCompositeSubscription.add(subscription);
+    }
+
+    private void showFABMenu(){
+        isFABOpen=true;
+        fabLayout1.setVisibility(View.VISIBLE);
+        fabLayout2.setVisibility(View.VISIBLE);
+        fabLayout3.setVisibility(View.VISIBLE);
+        fabLayout4.setVisibility(View.VISIBLE);
+        fabLayout5.setVisibility(View.VISIBLE);
+        fabBGLayout.setVisibility(View.VISIBLE);
+
+        fab.animate().rotationBy(180);
+        fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
+        fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
+        fabLayout3.animate().translationY(-getResources().getDimension(R.dimen.standard_145));
+        fabLayout4.animate().translationY(-getResources().getDimension(R.dimen.standard_190));
+        fabLayout5.animate().translationY(-getResources().getDimension(R.dimen.standard_235));
+    }
+
+    private void closeFABMenu(){
+        isFABOpen=false;
+        fabBGLayout.setVisibility(View.GONE);
+        fab.animate().rotationBy(-180);
+        fabLayout1.animate().translationY(0);
+        fabLayout2.animate().translationY(0);
+        fabLayout3.animate().translationY(0);
+        fabLayout4.animate().translationY(0);
+        fabLayout5.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if(!isFABOpen){
+                    fabLayout1.setVisibility(View.GONE);
+                    fabLayout2.setVisibility(View.GONE);
+                    fabLayout3.setVisibility(View.GONE);
+                    fabLayout4.setVisibility(View.GONE);
+                    fabLayout5.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
     }
 }

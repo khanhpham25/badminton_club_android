@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FabTitle2"
+            android:text="My Club"
             android:textStyle="bold"
             android:textColor="#FFFFFF"/>
 
@@ -93,12 +93,68 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FabTitle3"
+            android:text="Recruiting Club"
             android:textStyle="bold"
             android:textColor="#FFFFFF"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@android:drawable/ic_menu_share"
+            app:fabSize="mini"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fabLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        android:layout_marginRight="@dimen/standard_23"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="52dp"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Allow Friendly Match Club"
+            android:textColor="#FFFFFF"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@android:drawable/ic_menu_share"
+            app:fabSize="mini"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fabLayout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        android:layout_marginRight="@dimen/standard_23"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="52dp"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Club"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

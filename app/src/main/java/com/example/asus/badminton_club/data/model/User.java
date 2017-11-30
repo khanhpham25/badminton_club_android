@@ -3,6 +3,8 @@ package com.example.asus.badminton_club.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by khanh on 07/11/2017.
  */
@@ -33,6 +35,15 @@ public class User {
     @SerializedName("main_rackquet")
     @Expose
     private String mainRackquet;
+    @SerializedName("requested_club_ids")
+    @Expose
+    private List<Integer> requestedClubIds;
+    @SerializedName("owned_club_ids")
+    @Expose
+    private List<Integer> ownedClubIds;
+    @SerializedName("member_club_ids")
+    @Expose
+    private List<Integer> memberClubIds;
     @SerializedName("provider")
     @Expose
     private String provider;
@@ -50,7 +61,7 @@ public class User {
     private String updatedAt;
     @SerializedName("auth_token")
     @Expose
-    private String authToken;;
+    private String authToken;
 
     public Integer getId() {
         return id;
@@ -109,6 +120,18 @@ public class User {
     public void setMainRackquet(String mainRackquet) {
         this.mainRackquet = mainRackquet;
     }
+
+    public List<Integer> getRequestedClubIds() { return requestedClubIds; }
+
+    public void setRequestedClubIds(List<Integer> requestedClubIds) { this.requestedClubIds = requestedClubIds; }
+
+    public List<Integer> getOwnedClubIds() { return ownedClubIds; }
+
+    public void setOwnedClubIds(List<Integer> ownedClubIds) { this.ownedClubIds = ownedClubIds; }
+
+    public List<Integer> getMemberClubIds() { return memberClubIds; }
+
+    public void setMemberClubIds(List<Integer> memberClubIds) { this.memberClubIds = memberClubIds; }
 
     public String getProvider() { return provider; }
 

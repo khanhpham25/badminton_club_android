@@ -15,6 +15,19 @@ public class Tab1Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tab1, container, false);
+        View view = inflater.inflate(R.layout.tab1, container, false);
+
+        final View buttonGoMap = view.findViewById(R.id.go_to_club_map);
+        buttonGoMap.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(ClubMapsActivity.getInstance(getActivity()));
+                    }
+                }
+        );
+
+        return view;
     }
+
 }
