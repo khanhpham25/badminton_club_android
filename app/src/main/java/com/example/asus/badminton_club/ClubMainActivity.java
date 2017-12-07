@@ -27,7 +27,6 @@ import com.example.asus.badminton_club.data.source.local.UserLocalDataSource;
 import com.example.asus.badminton_club.data.source.remote.api.error.BaseException;
 import com.example.asus.badminton_club.data.source.remote.api.error.SafetyError;
 import com.example.asus.badminton_club.data.source.remote.api.service.AppServiceClient;
-import com.example.asus.badminton_club.screen.setting.SettingActivity;
 import com.example.asus.badminton_club.utils.Constant;
 import com.example.asus.badminton_club.utils.RealPathUtil;
 
@@ -137,7 +136,9 @@ public class ClubMainActivity extends AppCompatActivity{
         fab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = ClubRequestActivity.getInstance(ClubMainActivity.this);
+                intent.putExtra("current_club", selectedClub);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -277,7 +278,7 @@ public class ClubMainActivity extends AppCompatActivity{
         mProgressDialog.setMessage("Cancelling...");
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
-        Subscription subscription = AppServiceClient.getInstance().cancelJoinRequest(currentUser.getId(),
+        Subscription subscription = AppServiceClient.getInstance().handleDeleteJoinRequest(currentUser.getId(),
                 selectedClub.getId(), currentUser.getAuthToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

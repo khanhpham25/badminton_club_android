@@ -16,7 +16,7 @@ public class ClubRecyclerTouchListener implements RecyclerView.OnItemTouchListen
     private OnItemClickListener clickListener;
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     public ClubRecyclerTouchListener(Context context, OnItemClickListener listener) {
