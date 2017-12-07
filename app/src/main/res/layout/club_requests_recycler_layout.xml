@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="100dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     android:clickable="true">
 
     <android.support.v7.widget.CardView
@@ -39,10 +41,10 @@
                 android:id="@+id/btnAcceptRequest"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:backgroundTint="#d3d2d2"
                 android:drawableLeft="@drawable/ic_active"
-                android:onClick="acceptRequest"
                 android:text="  Accept"
                 android:textColor="#565656"
                 android:textSize="12sp"
@@ -53,10 +55,10 @@
                 android:id="@+id/btnDenyRequest"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:backgroundTint="#d3d2d2"
                 android:drawableLeft="@drawable/ic_deny"
-                android:onClick="denyRequest"
                 android:text="  Deny"
                 android:textColor="#565656"
                 android:textSize="12sp"

@@ -2,6 +2,7 @@ package com.example.asus.badminton_club.data.source.remote.api.service;
 
 import com.example.asus.badminton_club.data.model.BaseResponse;
 import com.example.asus.badminton_club.data.model.Club;
+import com.example.asus.badminton_club.data.model.JoinRequest;
 import com.example.asus.badminton_club.data.model.User;
 import com.example.asus.badminton_club.data.model.UserResponse;
 
@@ -29,15 +30,15 @@ import rx.Observable;
 public interface AppApi {
     @POST("users")
     Observable<BaseResponse<User>> register(@Query("user[name]") String userName,
-                                      @Query("user[email]") String email,
-                                      @Query("user[password]") String password,
-                                      @Query("user[password_confirmation]") String passwordConfirm);
+                                            @Query("user[email]") String email,
+                                            @Query("user[password]") String password,
+                                            @Query("user[password_confirmation]") String passwordConfirm);
 
     @Multipart
     @PATCH("users/{id}")
     Observable<BaseResponse<User>> uploadUserAvatar(@Path("id") int id,
-                                            @Part MultipartBody.Part file,
-                                            @Header("Authorization") String auth_token);
+                                                    @Part MultipartBody.Part file,
+                                                    @Header("Authorization") String auth_token);
 
     @PATCH("users/{id}")
     Observable<BaseResponse<User>> updateUserInfo(@Path("id") int id,
@@ -50,7 +51,7 @@ public interface AppApi {
 
     @POST("users/sign_in")
     Observable<BaseResponse<User>> login (@Query("session[email]") String email,
-                            @Query("session[password]") String password);
+                                          @Query("session[password]") String password);
 
     @DELETE("users/sign_out")
     Observable<BaseResponse> logout (@Query("auth_token") String auth_token);
@@ -63,11 +64,11 @@ public interface AppApi {
 
     @POST("clubs")
     Observable<BaseResponse<Club>> createClub(@Query("club[name]") String clubName,
-                                            @Query("club[location]") String location,
-                                            @Query("club[is_recruiting]") Boolean isRecruiting,
-                                            @Query("club[allow_friendly_match]") Boolean allowMatch,
-                                            @Query("club[user_clubs_attributes][0][user_id]") Integer userId,
-                                            @Query("club[user_clubs_attributes][0][is_owner]") Boolean isOwner);
+                                              @Query("club[location]") String location,
+                                              @Query("club[is_recruiting]") Boolean isRecruiting,
+                                              @Query("club[allow_friendly_match]") Boolean allowMatch,
+                                              @Query("club[user_clubs_attributes][0][user_id]") Integer userId,
+                                              @Query("club[user_clubs_attributes][0][is_owner]") Boolean isOwner);
 
     @GET("clubs")
     Observable<BaseResponse<ArrayList<Club>>> getAllClubs(@Query("sort") String sortType,
@@ -76,41 +77,49 @@ public interface AppApi {
     @Multipart
     @PATCH("clubs/{id}")
     Observable<BaseResponse<Club>> uploadClubAvatar(@Path("id") int id,
-                                                @Part MultipartBody.Part file,
-                                                @Header("Authorization") String auth_token);
+                                                    @Part MultipartBody.Part file,
+                                                    @Header("Authorization") String auth_token);
 
     @PATCH("clubs/{id}")
     Observable<BaseResponse<Club>> updateClubInfo(@Path("id") int id,
-                                              @Query("club[name]") String clubName,
-                                              @Query("club[location]") String location,
-                                              @Query("club[latitude]") Double latitude,
-                                              @Query("club[longitude]") Double longitude,
-                                              @Query("club[description]") String description,
-                                              @Query("club[average_level]") Integer averageLevel,
-                                              @Query("club[is_recruiting]") Boolean isRecruiting,
-                                              @Query("club[allow_friendly_match]") Boolean allowMatch,
-                                              @Header("Authorization") String auth_token);
+                                                  @Query("club[name]") String clubName,
+                                                  @Query("club[location]") String location,
+                                                  @Query("club[latitude]") Double latitude,
+                                                  @Query("club[longitude]") Double longitude,
+                                                  @Query("club[description]") String description,
+                                                  @Query("club[average_level]") Integer averageLevel,
+                                                  @Query("club[is_recruiting]") Boolean isRecruiting,
+                                                  @Query("club[allow_friendly_match]") Boolean allowMatch,
+                                                  @Header("Authorization") String auth_token);
 
     @POST("password_resets")
     Observable<BaseResponse<User>> submitEmail(@Query("password_reset[email]") String email);
 
     @PATCH("password_resets")
     Observable<BaseResponse<User>> resetPassword(@Query("email") String email,
-                                                    @Query("user[reset_digest]") String resetToken,
-                                                    @Query("user[password]") String password,
-                                                    @Query("user[password_confirmation]") String cPassword);
+                                                 @Query("user[reset_digest]") String resetToken,
+                                                 @Query("user[password]") String password,
+                                                 @Query("user[password_confirmation]") String cPassword);
 
     @POST("join_requests")
     Observable<BaseResponse<User>> joinClub(@Query("join_request[user_id]") Integer userId,
                                             @Query("join_request[club_id]") Integer clubId);
 
     @DELETE("join_requests")
-    Observable<BaseResponse<User>> cancelJoinRequest(@Query("user_id") Integer userId,
-                                                     @Query("club_id") Integer clubId,
-                                                     @Header("Authorization") String auth_token);
+    Observable<BaseResponse<User>> handleDeleteJoinRequest(@Query("user_id") Integer userId,
+                                                           @Query("club_id") Integer clubId,
+                                                           @Header("Authorization") String auth_token);
 
     @DELETE("user_clubs")
     Observable<BaseResponse<User>> outClub(@Query("user_id") Integer userId,
-                                                     @Query("club_id") Integer clubId,
-                                                     @Header("Authorization") String auth_token);
+                                           @Query("club_id") Integer clubId,
+                                           @Header("Authorization") String auth_token);
+
+    @GET("join_requests")
+    Observable<BaseResponse<ArrayList<JoinRequest>>> getClubRequests(@Query("club_id") Integer clubId);
+
+    @POST("user_clubs")
+    Observable<BaseResponse<User>> acceptClubRequest(@Query("user_club[user_id]") Integer userId,
+                                                     @Query("user_club[club_id]") Integer clubId,
+                                                     @Query("user_club[is_owner]    ") Boolean isOwner);
 }
