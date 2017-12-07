@@ -1,14 +1,10 @@
 package com.example.asus.badminton_club.data;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +14,6 @@ import com.example.asus.badminton_club.data.model.Club;
 import com.example.asus.badminton_club.utils.Constant;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by khanh on 17/11/2017.
@@ -51,7 +46,7 @@ public class ClubCustomAdapter extends RecyclerView.Adapter<ClubCustomAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.textviewlayout, parent, false);
+                .inflate(R.layout.club_list_recycler_layout, parent, false);
 
         return new ViewHolder(itemView);
     }

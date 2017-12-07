@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent" android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
     android:background="#6CC0EC" >
@@ -29,23 +30,33 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:hint="Club Name"/>
-        <EditText
-            android:layout_marginTop="5dp"
-            android:id="@+id/edtClubLocation"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Location"/>
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtClubLocation"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:hint="Location" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_map"
+                android:onClick="pickClubLocation" />
+        </LinearLayout>
         <EditText
             android:layout_marginTop="5dp"
             android:id="@+id/edtClubDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Description"/>
-        <Spinner
-            android:layout_marginTop="10dp"
-            android:id="@+id/spinnerClubLevel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
         <Switch
             android:layout_marginTop="15dp"
             android:layout_marginLeft="5dp"
@@ -69,6 +80,12 @@
             android:layout_marginTop="15dp"
             android:onClick="saveClubChanges"
             android:text="Save Changes" />
+
+        <Spinner
+            android:id="@+id/spinnerClubLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 

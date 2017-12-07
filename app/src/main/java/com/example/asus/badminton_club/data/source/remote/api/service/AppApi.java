@@ -70,7 +70,8 @@ public interface AppApi {
                                             @Query("club[user_clubs_attributes][0][is_owner]") Boolean isOwner);
 
     @GET("clubs")
-    Observable<BaseResponse<ArrayList<Club>>> getAllClubs();
+    Observable<BaseResponse<ArrayList<Club>>> getAllClubs(@Query("sort") String sortType,
+                                                          @Header("Authorization") String auth_token);
 
     @Multipart
     @PATCH("clubs/{id}")
@@ -82,6 +83,8 @@ public interface AppApi {
     Observable<BaseResponse<Club>> updateClubInfo(@Path("id") int id,
                                               @Query("club[name]") String clubName,
                                               @Query("club[location]") String location,
+                                              @Query("club[latitude]") Double latitude,
+                                              @Query("club[longitude]") Double longitude,
                                               @Query("club[description]") String description,
                                               @Query("club[average_level]") Integer averageLevel,
                                               @Query("club[is_recruiting]") Boolean isRecruiting,
@@ -89,11 +92,25 @@ public interface AppApi {
                                               @Header("Authorization") String auth_token);
 
     @POST("password_resets")
-    Observable<BaseResponse<User>> submitEmail (@Query("password_reset[email]") String email);
+    Observable<BaseResponse<User>> submitEmail(@Query("password_reset[email]") String email);
 
     @PATCH("password_resets")
     Observable<BaseResponse<User>> resetPassword(@Query("email") String email,
                                                     @Query("user[reset_digest]") String resetToken,
                                                     @Query("user[password]") String password,
                                                     @Query("user[password_confirmation]") String cPassword);
+
+    @POST("join_requests")
+    Observable<BaseResponse<User>> joinClub(@Query("join_request[user_id]") Integer userId,
+                                            @Query("join_request[club_id]") Integer clubId);
+
+    @DELETE("join_requests")
+    Observable<BaseResponse<User>> cancelJoinRequest(@Query("user_id") Integer userId,
+                                                     @Query("club_id") Integer clubId,
+                                                     @Header("Authorization") String auth_token);
+
+    @DELETE("user_clubs")
+    Observable<BaseResponse<User>> outClub(@Query("user_id") Integer userId,
+                                                     @Query("club_id") Integer clubId,
+                                                     @Header("Authorization") String auth_token);
 }

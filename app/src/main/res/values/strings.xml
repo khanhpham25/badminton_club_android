@@ -1,5 +1,6 @@
 <resources>
     <string name="facebook_app_id">1883134291716182</string>
+    <string name="google_maps_key">AIzaSyAJioU8AaQjXKCMZ11QC33M4j3PE7UodLw</string>
     <string name="fb_login_protocol_scheme">fb1883134291716182</string>
     <string name="app_name">Badminton Club</string>
     <string name="title_activity_main2">Main2Activity</string>
@@ -10,4 +11,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="title_activity_club_maps">Map</string>
 </resources>

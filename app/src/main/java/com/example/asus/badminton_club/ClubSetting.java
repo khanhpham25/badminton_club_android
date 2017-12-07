@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,6 +25,11 @@ import com.example.asus.badminton_club.data.source.remote.api.error.BaseExceptio
 import com.example.asus.badminton_club.data.source.remote.api.error.SafetyError;
 import com.example.asus.badminton_club.data.source.remote.api.service.AppServiceClient;
 import com.example.asus.badminton_club.screen.setting.SettingAccountEditActivity;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +59,10 @@ public class ClubSetting extends AppCompatActivity {
     private Spinner spinnerClubLevel;
     private Switch swAllowMatch;
     private Switch swRecruiting;
+    private Place selectedPlace;
+
+    public static final int PLACE_PICKER_REQUEST = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +144,17 @@ public class ClubSetting extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                selectedPlace = PlacePicker.getPlace(data, this);
+                edtLocation.setText(selectedPlace.getAddress().toString());
+            }
+        }
+    }
+
     public void saveClubChanges(View view) {
         User currentUser = new UserLocalDataSource(ClubSetting.this).getCurrentUser();
 
@@ -143,12 +164,18 @@ public class ClubSetting extends AppCompatActivity {
         Integer updateLevel = spinnerClubLevel.getSelectedItemPosition();
         Boolean updateAllowMatch = swAllowMatch.isChecked();
         Boolean updateRecruiting = swRecruiting.isChecked();
+        Double latitude = null, longitude = null;
+
+        if (selectedPlace != null) {
+            latitude = selectedPlace.getLatLng().latitude;
+            longitude = selectedPlace.getLatLng().longitude;
+        }
 
         if (!updateName.trim().equals("")) {
             mProgressDialog.show();
             Subscription subscription = AppServiceClient.getInstance().updateClubInfo(currentClub.getId(),
-                    updateName, updateLocation, updateDescription, updateLevel, updateRecruiting, updateAllowMatch,
-                    currentUser.getAuthToken())
+                    updateName, updateLocation, latitude, longitude, updateDescription, updateLevel,
+                    updateRecruiting, updateAllowMatch, currentUser.getAuthToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<BaseResponse<Club>>() {
@@ -171,7 +198,16 @@ public class ClubSetting extends AppCompatActivity {
 
             mCompositeSubscription.add(subscription);
         } else {
-            Toast.makeText(ClubSetting.this, "Name can't be blank", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ClubSetting.this, "Name can't be blank",
+                    Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void pickClubLocation(View view) throws GooglePlayServicesNotAvailableException,
+            GooglePlayServicesRepairableException {
+
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        startActivityForResult(builder.build(ClubSetting.this), PLACE_PICKER_REQUEST);
     }
 }

@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.example.asus.badminton_club.data.ClubCustomAdapter;
 import com.example.asus.badminton_club.data.model.BaseResponse;
 import com.example.asus.badminton_club.data.model.Club;
+import com.example.asus.badminton_club.data.model.User;
+import com.example.asus.badminton_club.data.source.local.UserLocalDataSource;
 import com.example.asus.badminton_club.data.source.remote.api.error.BaseException;
 import com.example.asus.badminton_club.data.source.remote.api.error.SafetyError;
 import com.example.asus.badminton_club.data.source.remote.api.service.AppServiceClient;
@@ -42,8 +44,8 @@ public class Tab2Fragment extends Fragment {
     private static ClubCustomAdapter adapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private FloatingActionButton fab, fab1, fab2, fab3;
-    private LinearLayout fabLayout1, fabLayout2, fabLayout3;
+    private FloatingActionButton fab, fab1, fab2, fab3, fab4, fab5;
+    private LinearLayout fabLayout1, fabLayout2, fabLayout3, fabLayout4, fabLayout5;
     private View fabBGLayout;
     private boolean isFABOpen=false;
     private boolean isLoaded = false;
@@ -56,10 +58,14 @@ public class Tab2Fragment extends Fragment {
         fabLayout1= view.findViewById(R.id.fabLayout1);
         fabLayout2= view.findViewById(R.id.fabLayout2);
         fabLayout3= view.findViewById(R.id.fabLayout3);
+        fabLayout4= view.findViewById(R.id.fabLayout4);
+        fabLayout5= view.findViewById(R.id.fabLayout5);
         fab = view.findViewById(R.id.fab);
         fab1 = view.findViewById(R.id.fab1);
         fab2= view.findViewById(R.id.fab2);
         fab3 = view.findViewById(R.id.fab3);
+        fab4 = view.findViewById(R.id.fab4);
+        fab5 = view.findViewById(R.id.fab5);
         fabBGLayout = view.findViewById(R.id.fabBGLayout);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +91,34 @@ public class Tab2Fragment extends Fragment {
             public void onClick(View view) {
                 Intent gotoCreateclub = new Intent(getActivity(), ClubCreate.class);
                 startActivityForResult(gotoCreateclub, 0);
+            }
+        });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadClubsData("my_club");
+            }
+        });
+
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadClubsData("recruiting");
+            }
+        });
+
+        fab4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadClubsData("friendly_match");
+            }
+        });
+
+        fab5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadClubsData("all");
             }
         });
 
@@ -130,26 +164,7 @@ public class Tab2Fragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isLoaded ) {
-            mProgressDialog.show();
-            Subscription subscription = AppServiceClient.getInstance().getAllClubs()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<BaseResponse<ArrayList<Club>>>() {
-                        @Override
-                        public void call(BaseResponse<ArrayList<Club>> clubs) {
-                            listClubs = new ArrayList<>(clubs.getData());
-                            adapter = new ClubCustomAdapter(listClubs, getActivity());
-                            mRecyclerView.setAdapter(adapter);
-                            mProgressDialog.dismiss();
-                        }
-                    }, new SafetyError() {
-                        @Override
-                        public void onSafetyError(BaseException error) {
-                            mProgressDialog.dismiss();
-                            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            mCompositeSubscription.add(subscription);
+            loadClubsData("all");
 
             isLoaded = true;
         }
@@ -160,12 +175,16 @@ public class Tab2Fragment extends Fragment {
         fabLayout1.setVisibility(View.VISIBLE);
         fabLayout2.setVisibility(View.VISIBLE);
         fabLayout3.setVisibility(View.VISIBLE);
+        fabLayout4.setVisibility(View.VISIBLE);
+        fabLayout5.setVisibility(View.VISIBLE);
         fabBGLayout.setVisibility(View.VISIBLE);
 
         fab.animate().rotationBy(180);
         fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
         fabLayout3.animate().translationY(-getResources().getDimension(R.dimen.standard_145));
+        fabLayout4.animate().translationY(-getResources().getDimension(R.dimen.standard_190));
+        fabLayout5.animate().translationY(-getResources().getDimension(R.dimen.standard_235));
     }
 
     private void closeFABMenu(){
@@ -174,7 +193,9 @@ public class Tab2Fragment extends Fragment {
         fab.animate().rotationBy(-180);
         fabLayout1.animate().translationY(0);
         fabLayout2.animate().translationY(0);
-        fabLayout3.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+        fabLayout3.animate().translationY(0);
+        fabLayout4.animate().translationY(0);
+        fabLayout5.animate().translationY(0).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
 
@@ -186,6 +207,8 @@ public class Tab2Fragment extends Fragment {
                     fabLayout1.setVisibility(View.GONE);
                     fabLayout2.setVisibility(View.GONE);
                     fabLayout3.setVisibility(View.GONE);
+                    fabLayout4.setVisibility(View.GONE);
+                    fabLayout5.setVisibility(View.GONE);
                 }
 
             }
@@ -200,5 +223,30 @@ public class Tab2Fragment extends Fragment {
 
             }
         });
+    }
+
+    public void loadClubsData(String sortType) {
+        mProgressDialog.show();
+        User currentUser = new UserLocalDataSource(getActivity()).getCurrentUser();
+
+        Subscription subscription = AppServiceClient.getInstance().getAllClubs(sortType, currentUser.getAuthToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<BaseResponse<ArrayList<Club>>>() {
+                    @Override
+                    public void call(BaseResponse<ArrayList<Club>> clubs) {
+                        listClubs = new ArrayList<>(clubs.getData());
+                        adapter = new ClubCustomAdapter(listClubs, getActivity());
+                        mRecyclerView.setAdapter(adapter);
+                        mProgressDialog.dismiss();
+                    }
+                }, new SafetyError() {
+                    @Override
+                    public void onSafetyError(BaseException error) {
+                        mProgressDialog.dismiss();
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        mCompositeSubscription.add(subscription);
     }
 }
