@@ -85,7 +85,11 @@
         <activity
             android:name=".ClubMapsActivity"
             android:label="@string/title_activity_club_maps" />
-        <activity android:name=".ClubRequestActivity"></activity>
+        <activity android:name=".ClubRequestActivity" />
+        <activity android:name=".ClubMembersActivity" />
+        <activity android:name=".ShowUserActivity" />
+        <activity android:name=".ClubScheduleActivity" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>

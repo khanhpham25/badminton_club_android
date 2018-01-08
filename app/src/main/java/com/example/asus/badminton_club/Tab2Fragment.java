@@ -210,7 +210,6 @@ public class Tab2Fragment extends Fragment {
                     fabLayout4.setVisibility(View.GONE);
                     fabLayout5.setVisibility(View.GONE);
                 }
-
             }
 
             @Override
@@ -243,8 +242,8 @@ public class Tab2Fragment extends Fragment {
                 }, new SafetyError() {
                     @Override
                     public void onSafetyError(BaseException error) {
-                        mProgressDialog.dismiss();
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    mProgressDialog.dismiss();
+                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         mCompositeSubscription.add(subscription);

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:clickable="true">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#6CC0EC">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <ViewSwitcher
+                android:id="@+id/my_switcher"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/tvDateTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="TextViewClicked"
+                    android:drawableLeft="@drawable/ic_schedule"
+                    android:layout_marginLeft="5dp"/>
+
+                <EditText
+                    android:id="@+id/edtDateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter date and time" />
+
+            </ViewSwitcher>
+            <Button
+                android:id="@+id/btnConfirmDate"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_active"
+                android:backgroundTint="#e1e1e1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnDeleteSchedule"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/btnEditDate"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_edit"
+                android:backgroundTint="#e1e1e1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnDeleteSchedule"
+                app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/btnDeleteSchedule"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#ff6666"
+                android:drawableLeft="@drawable/ic_cross"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

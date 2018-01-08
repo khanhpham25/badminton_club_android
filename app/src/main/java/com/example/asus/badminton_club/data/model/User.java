@@ -3,13 +3,14 @@ package com.example.asus.badminton_club.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by khanh on 07/11/2017.
  */
 
-public class User {
+public class User implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -50,6 +51,9 @@ public class User {
     @SerializedName("is_admin")
     @Expose
     private Object isAdmin;
+    @SerializedName("is_owner")
+    @Expose
+    private Boolean isOwner;
     @SerializedName("deleted_at")
     @Expose
     private Object deletedAt;
@@ -136,6 +140,10 @@ public class User {
     public String getProvider() { return provider; }
 
     public void setProvider(String provider) { this.provider = provider; }
+
+    public Boolean getOwner() {return isOwner;}
+
+    public void setOwner(Boolean owner) {isOwner = owner;}
 
     public Object getIsAdmin() {
         return isAdmin;

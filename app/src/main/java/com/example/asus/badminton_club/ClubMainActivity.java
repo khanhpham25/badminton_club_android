@@ -27,6 +27,7 @@ import com.example.asus.badminton_club.data.source.local.UserLocalDataSource;
 import com.example.asus.badminton_club.data.source.remote.api.error.BaseException;
 import com.example.asus.badminton_club.data.source.remote.api.error.SafetyError;
 import com.example.asus.badminton_club.data.source.remote.api.service.AppServiceClient;
+import com.example.asus.badminton_club.screen.authentication.LoginActivity;
 import com.example.asus.badminton_club.utils.Constant;
 import com.example.asus.badminton_club.utils.RealPathUtil;
 
@@ -64,8 +65,8 @@ public class ClubMainActivity extends AppCompatActivity{
     private TextView tvAvgLevel;
     private ImageView ivAllowMatch;
     private ImageView ivRecruiting;
-    private FloatingActionButton fab, fab1, fab2, fab3, fab4, fab5;
-    private LinearLayout fabLayout1, fabLayout2, fabLayout3, fabLayout4, fabLayout5;
+    private FloatingActionButton fab, fab1, fab2, fab4, fab5;
+    private LinearLayout fabLayout1, fabLayout2, fabLayout4, fabLayout5;
     private View fabBGLayout;
     private boolean isFABOpen=false;
     private Button btnJoinClub;
@@ -84,13 +85,11 @@ public class ClubMainActivity extends AppCompatActivity{
 
         fabLayout1= findViewById(R.id.fabLayoutClubShow1);
         fabLayout2= findViewById(R.id.fabLayoutClubShow2);
-        fabLayout3= findViewById(R.id.fabLayoutClubShow3);
         fabLayout4= findViewById(R.id.fabLayoutClubShow4);
         fabLayout5= findViewById(R.id.fabLayoutClubShow5);
         fab = findViewById(R.id.fabClubShow);
         fab1 = findViewById(R.id.fabClubShow1);
         fab2 = findViewById(R.id.fabClubShow2);
-        fab3 = findViewById(R.id.fabClubShow3);
         fab4 = findViewById(R.id.fabClubShow4);
         fab5 = findViewById(R.id.fabClubShow5);
         fabBGLayout = findViewById(R.id.fabBGLayoutClubShow);
@@ -116,20 +115,18 @@ public class ClubMainActivity extends AppCompatActivity{
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = ClubMembersActivity.getInstance(ClubMainActivity.this);
+                intent.putExtra("current_club", selectedClub);
+                startActivityForResult(intent, 0);
             }
         });
 
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-            }
-        });
-
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+                Intent intent = ClubScheduleActivity.getInstance(ClubMainActivity.this);
+                intent.putExtra("current_club", selectedClub);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -174,6 +171,13 @@ public class ClubMainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 cancelJoin();
+            }
+        });
+
+        btnOutClub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                outClub();
             }
         });
 
@@ -257,6 +261,8 @@ public class ClubMainActivity extends AppCompatActivity{
                         List<Integer> listRequest = currentUser.getRequestedClubIds();
                         listRequest.add(selectedClub.getId());
                         currentUser.setRequestedClubIds(listRequest);
+                        new UserLocalDataSource(ClubMainActivity.this).clearUser();
+                        new UserLocalDataSource(ClubMainActivity.this).saveUser(currentUser);
                         btnJoinClub.setVisibility(View.GONE);
                         btnOutClub.setVisibility(View.GONE);
                         btnCancelJoin.setVisibility(View.VISIBLE);
@@ -289,6 +295,8 @@ public class ClubMainActivity extends AppCompatActivity{
                         List<Integer> listRequest = currentUser.getRequestedClubIds();
                         listRequest.remove(Integer.valueOf(selectedClub.getId()));
                         currentUser.setRequestedClubIds(listRequest);
+                        new UserLocalDataSource(ClubMainActivity.this).clearUser();
+                        new UserLocalDataSource(ClubMainActivity.this).saveUser(currentUser);
                         btnJoinClub.setVisibility(View.VISIBLE);
                         btnOutClub.setVisibility(View.GONE);
                         btnCancelJoin.setVisibility(View.GONE);
@@ -310,7 +318,7 @@ public class ClubMainActivity extends AppCompatActivity{
         mProgressDialog.setMessage("Processing...");
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
-        Subscription subscription = AppServiceClient.getInstance().outClub(currentUser.getId(),
+        Subscription subscription = AppServiceClient.getInstance().outClub(0, currentUser.getId(),
                 selectedClub.getId(), currentUser.getAuthToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -327,6 +335,8 @@ public class ClubMainActivity extends AppCompatActivity{
                         btnJoinClub.setVisibility(View.VISIBLE);
                         btnOutClub.setVisibility(View.GONE);
                         btnCancelJoin.setVisibility(View.GONE);
+                        new UserLocalDataSource(ClubMainActivity.this).clearUser();
+                        new UserLocalDataSource(ClubMainActivity.this).saveUser(currentUser);
                         mProgressDialog.dismiss();
                     }
                 }, new SafetyError() {
@@ -431,17 +441,21 @@ public class ClubMainActivity extends AppCompatActivity{
         isFABOpen=true;
         fabLayout1.setVisibility(View.VISIBLE);
         fabLayout2.setVisibility(View.VISIBLE);
-        fabLayout3.setVisibility(View.VISIBLE);
-        fabLayout4.setVisibility(View.VISIBLE);
-        fabLayout5.setVisibility(View.VISIBLE);
+
+        if(currentUser.getOwnedClubIds().contains(selectedClub.getId())) {
+            fabLayout5.setVisibility(View.VISIBLE);
+            fabLayout4.setVisibility(View.VISIBLE);
+        } else {
+            fabLayout5.setVisibility(View.GONE);
+            fabLayout4.setVisibility(View.GONE);
+        }
         fabBGLayout.setVisibility(View.VISIBLE);
 
         fab.animate().rotationBy(180);
         fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
-        fabLayout3.animate().translationY(-getResources().getDimension(R.dimen.standard_145));
-        fabLayout4.animate().translationY(-getResources().getDimension(R.dimen.standard_190));
-        fabLayout5.animate().translationY(-getResources().getDimension(R.dimen.standard_235));
+        fabLayout4.animate().translationY(-getResources().getDimension(R.dimen.standard_145));
+        fabLayout5.animate().translationY(-getResources().getDimension(R.dimen.standard_190));
     }
 
     private void closeFABMenu(){
@@ -450,7 +464,6 @@ public class ClubMainActivity extends AppCompatActivity{
         fab.animate().rotationBy(-180);
         fabLayout1.animate().translationY(0);
         fabLayout2.animate().translationY(0);
-        fabLayout3.animate().translationY(0);
         fabLayout4.animate().translationY(0);
         fabLayout5.animate().translationY(0).setListener(new Animator.AnimatorListener() {
             @Override
@@ -463,7 +476,6 @@ public class ClubMainActivity extends AppCompatActivity{
                 if(!isFABOpen){
                     fabLayout1.setVisibility(View.GONE);
                     fabLayout2.setVisibility(View.GONE);
-                    fabLayout3.setVisibility(View.GONE);
                     fabLayout4.setVisibility(View.GONE);
                     fabLayout5.setVisibility(View.GONE);
                 }

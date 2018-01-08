@@ -50,6 +50,7 @@ public final class BaseException extends RuntimeException {
     }
 
     public static BaseException toUnexpectedError(Throwable cause) {
+        cause.toString();
         return new BaseException(Type.UNEXPECTED, cause);
     }
 
@@ -59,6 +60,7 @@ public final class BaseException extends RuntimeException {
     }
 
     public String getMessage() {
+
         switch (type) {
             case Type.SERVER:
                 if (errorResponse != null) {

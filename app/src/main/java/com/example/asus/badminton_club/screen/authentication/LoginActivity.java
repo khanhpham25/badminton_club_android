@@ -169,17 +169,17 @@ public class LoginActivity extends AppCompatActivity {
                 .subscribe(new Action1<BaseResponse<User>>() {
                     @Override
                     public void call(BaseResponse<User> user) {
-                        mProgressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Sign in succesfully!", Toast.LENGTH_SHORT).show();
-                        new UserLocalDataSource(LoginActivity.this).saveUser(user.getData());
-                        startActivity(CentralPageActivity.getInstance(LoginActivity.this));
-                        finish();
+                    mProgressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "Sign in succesfully!", Toast.LENGTH_SHORT).show();
+                    new UserLocalDataSource(LoginActivity.this).saveUser(user.getData());
+                    startActivity(CentralPageActivity.getInstance(LoginActivity.this));
+                    finish();
                     }
                 }, new SafetyError() {
                     @Override
                     public void onSafetyError(BaseException error) {
-                        mProgressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    mProgressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

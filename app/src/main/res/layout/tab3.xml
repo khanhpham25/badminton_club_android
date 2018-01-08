@@ -35,20 +35,22 @@
             android:id="@+id/account"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="account"
             android:text="Account" />
 
         <Button
+            android:id="@+id/btnAlert"
             android:text="Alert"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <Button
+            android:id="@+id/btnTheme"
             android:text="Theme"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <Button
+            android:id="@+id/btnAbout"
             android:text="About"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

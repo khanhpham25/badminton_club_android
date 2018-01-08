@@ -93,7 +93,9 @@ public class ClubRequestActivity extends AppCompatActivity {
 
                             @Override
                             public void imageViewAvatarOnClick(View v, int position) {
-                                Toast.makeText(ClubRequestActivity.this, "Image" + position, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(ClubRequestActivity.this, ShowUserActivity.class);
+                                intent.putExtra("selected_user", listRequests.get(position).getUser());
+                                startActivity(intent);
                             }
                         });
                         mRecyclerView.setAdapter(adapter);

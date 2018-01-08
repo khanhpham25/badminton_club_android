@@ -40,16 +40,19 @@
         <Button
             android:text="Alert"
             android:layout_width="match_parent"
+            android:onClick="developingClick"
             android:layout_height="match_parent" />
 
         <Button
             android:text="Theme"
             android:layout_width="match_parent"
+            android:onClick="developingClick"
             android:layout_height="match_parent" />
 
         <Button
             android:text="Setting"
             android:layout_width="match_parent"
+            android:onClick="developingClick"
             android:layout_height="match_parent" />
     </LinearLayout>
 </ScrollView>
