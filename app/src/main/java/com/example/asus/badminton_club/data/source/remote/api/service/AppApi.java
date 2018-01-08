@@ -5,6 +5,7 @@ import com.example.asus.badminton_club.data.model.Club;
 import com.example.asus.badminton_club.data.model.JoinRequest;
 import com.example.asus.badminton_club.data.model.User;
 import com.example.asus.badminton_club.data.model.UserResponse;
+import com.example.asus.badminton_club.data.model.WorkingSchedule;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public interface AppApi {
                                           @Query("session[password]") String password);
 
     @DELETE("users/sign_out")
-    Observable<BaseResponse> logout (@Query("auth_token") String auth_token);
+    Observable<BaseResponse> logout (@Query("email") String email);
 
     @POST("auth/omniauths")
     Observable<BaseResponse<User>> omniauth_login (@Query("session[email]") String email,
@@ -110,8 +111,9 @@ public interface AppApi {
                                                            @Query("club_id") Integer clubId,
                                                            @Header("Authorization") String auth_token);
 
-    @DELETE("user_clubs")
-    Observable<BaseResponse<User>> outClub(@Query("user_id") Integer userId,
+    @DELETE("user_clubs/{id}")
+    Observable<BaseResponse<User>> outClub(@Path("id") Integer id,
+                                           @Query("user_id") Integer userId,
                                            @Query("club_id") Integer clubId,
                                            @Header("Authorization") String auth_token);
 
@@ -121,5 +123,27 @@ public interface AppApi {
     @POST("user_clubs")
     Observable<BaseResponse<User>> acceptClubRequest(@Query("user_club[user_id]") Integer userId,
                                                      @Query("user_club[club_id]") Integer clubId,
-                                                     @Query("user_club[is_owner]    ") Boolean isOwner);
+                                                     @Query("user_club[is_owner]") Boolean isOwner);
+
+    @GET("members")
+    Observable<BaseResponse<ArrayList<User>>> getClubMembers(@Query("club_id") Integer clubId);
+
+    @GET("users/{id}")
+    Observable<BaseResponse<User>> getUserInfo(@Path("id") Integer id);
+
+    @GET("working_schedules")
+    Observable<BaseResponse<ArrayList<WorkingSchedule>>> getClubSchedules(@Query("club_id") Integer clubId);
+
+    @POST("working_schedules")
+    Observable<BaseResponse<WorkingSchedule>> createClubSchedule(@Query("working_schedule[club_id]") Integer club_id,
+                                                                 @Query("working_schedule[working_date]") String working_date);
+
+    @PATCH("working_schedules/{id}")
+    Observable<BaseResponse<WorkingSchedule>> updateClubSchedule(@Path("id") Integer id,
+                                                                 @Query("working_schedule[working_date]") String working_date,
+                                                                 @Header("Authorization") String auth_token);
+
+    @DELETE("working_schedules/{id}")
+    Observable<BaseResponse<WorkingSchedule>> deleteClubSchedule(@Path("id") Integer id,
+                                                                 @Header("Authorization") String auth_token);
 }

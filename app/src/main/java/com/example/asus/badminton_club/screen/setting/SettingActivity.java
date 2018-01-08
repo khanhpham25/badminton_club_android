@@ -169,8 +169,8 @@ public class SettingActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        String auth_token = currentUser.getAuthToken();
-                        Subscription subscription = AppServiceClient.getInstance().logout(auth_token)
+                        String email = currentUser.getEmail();
+                        Subscription subscription = AppServiceClient.getInstance().logout(email)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Action1<BaseResponse>() {

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#6CC0EC"
+    tools:context="com.example.asus.badminton_club.AboutActivity">
+
+    <ImageView
+        android:id="@+id/imgVAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/tvAbout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="7pt"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/imgVAbout"
+        android:text="This app was made by Group 4:\n Pham Bao Khanh\n Pham Hoang Minh\n Nguyen Van Kien \n Nguyen Duy Phong\nCopyright &#169; Group 4, Hanoi University of Science and Technology, 1st Dai Co Viet street."/>
+
+</android.support.constraint.ConstraintLayout>

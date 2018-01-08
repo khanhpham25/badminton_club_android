@@ -252,7 +252,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create Club"
+            android:text="Club Members"
             android:textStyle="bold"
             android:textColor="#FFFFFF"/>
 
@@ -261,7 +261,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:srcCompat="@android:drawable/ic_menu_add"
+            app:srcCompat="@drawable/ic_club_member"
             app:fabSize="mini"/>
     </LinearLayout>
 
@@ -280,7 +280,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Club"
+            android:text="Club Schedule"
             android:textStyle="bold"
             android:textColor="#FFFFFF"/>
 
@@ -289,36 +289,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:srcCompat="@android:drawable/ic_menu_camera"
-            app:fabSize="mini"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/fabLayoutClubShow3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/standard_12"
-        android:clipToPadding="false"
-        android:layout_marginRight="@dimen/standard_23"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="52dp"
-        android:layout_gravity="bottom|end"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Recruiting Club"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabClubShow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            app:srcCompat="@android:drawable/ic_menu_share"
+            app:srcCompat="@drawable/ic_calendar"
             app:fabSize="mini"/>
     </LinearLayout>
 

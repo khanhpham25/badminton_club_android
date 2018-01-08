@@ -37,6 +37,9 @@ public class Club implements Serializable{
     @SerializedName("number_of_members")
     @Expose
     private Integer numberOfMembers;
+    @SerializedName("all_members_count")
+    @Expose
+    private Integer allMembersCount;
     @SerializedName("is_recruiting")
     @Expose
     private Boolean isRecruiting;
@@ -106,6 +109,14 @@ public class Club implements Serializable{
 
     public void setNumberOfMembers(Integer numberOfMembers) {
         this.numberOfMembers = numberOfMembers;
+    }
+
+    public Integer getAllMembersCount() {
+        return allMembersCount;
+    }
+
+    public void setAllMembersCount(Integer allMembersCount) {
+        this.allMembersCount = allMembersCount;
     }
 
     public Boolean getRecruiting() {

@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:srcCompat="@android:drawable/ic_menu_camera"
+            app:srcCompat="@drawable/ic_my_club"
             app:fabSize="mini"/>
     </LinearLayout>
 
@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:srcCompat="@android:drawable/ic_menu_share"
+            app:srcCompat="@drawable/ic_recruits"
             app:fabSize="mini"/>
     </LinearLayout>
 
@@ -130,7 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:srcCompat="@android:drawable/ic_menu_share"
+            app:srcCompat="@drawable/ic_agreement"
             app:fabSize="mini"/>
     </LinearLayout>
 
@@ -158,7 +158,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:srcCompat="@android:drawable/ic_menu_share"
+            app:srcCompat="@drawable/ic_team"
             app:fabSize="mini"/>
     </LinearLayout>
 
